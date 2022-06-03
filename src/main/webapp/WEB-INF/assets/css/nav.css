@@ -1,0 +1,140 @@
+@charset "ISO-8859-1";
+
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+nav{
+    width: 96%;
+    height: 58px;
+    background-color: #fff;
+    border-bottom: 1px solid #31A3DD;
+    border-top: 1px solid #31A3DD;
+    text-transform: uppercase;
+    margin: 0;
+    color: black;
+}
+nav > ul{
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+nav li{
+    list-style-type: none;
+
+}
+nav > ul >li {
+    float: left;
+    position: relative;
+}
+nav> ul ::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+.submenu{
+    display: none;
+}
+nav input[type="checkbox"]{
+    display: none;
+}
+nav label{
+    display: none;
+}
+nav a{
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+}
+nav >ul >li > a{
+    padding: 20px;
+    
+}
+nav li:hover .submenu{
+    display: inline-block;
+    position: absolute;
+    top:52px;
+    left: 0px;
+    padding: 0px;
+    z-index: 1000;
+}
+.submenu li a{
+    padding: 15px 30px;
+    font-size: 13px;
+    width: 270px;
+    color: white;
+}
+
+.menu-html:hover{
+    border-top: 5px solid #0070bb;
+    background-color: #31A3DD;
+    color: white;
+}
+.menu-cours:hover{
+    border-top: 5px solid #0070bb;
+    background-color: #31A3DD;
+    color: white;
+}
+.menu-epreuves:hover{
+    border-top: 5px solid #0070bb;
+    background-color: #31A3DD;
+    color: white;
+}
+.menu-propos:hover{
+    border-top: 5px solid #0070bb;
+    background-color: #31A3DD;
+    color: white;
+}
+nav > ul > li:hover a{
+    padding: 15px 30px 20px 30px;
+}
+.submenu li{
+    border-bottom: 1px solid #CCC;
+    border-top: 1px solid #CCC;
+}
+
+.menu-cours .submenu{
+    background-color: rgb(43, 71, 230);
+}
+.menu-epreuves .submenu{
+    background-color: royalblue;
+}
+.submenu li:hover a{
+    color: #EEE;
+    font-weight: bold;
+}
+.menu-cours .submenu li:hover{
+    background-color: royalblue;
+}
+.menu-epreuves .submenu li:hover{
+    background-color: #31A3DD;
+}
+nav input[type=checkbox]:checked ~ ul{
+    display: block;
+}
+
+.I_btn{
+    float: right;
+    margin-right: 2%;
+    margin-top: 13px;
+    height: 25px;
+    background-color: #31A3DD;
+    border-radius: 10px;
+    padding: 4px;
+    padding-top: 10px;
+    color: white;
+}
+@media screen and (max-width: 600px){
+    
+    
+
+    .I_btn {
+        display: none;
+    }
+    .menu-propos{
+        display: none;
+    }
+ }
