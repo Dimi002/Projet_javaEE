@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.Document.bdd.Authentification;
+import com.Document.bdd.Utilisateur;
+
 /**
  * Servlet implementation class ControllerServlet
  */
@@ -28,7 +31,7 @@ public class ControllerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String action=request.getParameter("action");
-		if(action==null || action.equals("index")) {
+		if(action==null || action.equals("index")) { 
 			this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 		}else if(action.equals("inscription")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
@@ -45,7 +48,18 @@ public class ControllerServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//doGet(request, response);
+		String userName = request.getParameter("username");
+		String passWord = request.getParameter("password");
+		
+		Authentification authentification = new Authentification();
+		String _nom =authentification.EffectuConnexion(userName,passWord).getNom();
+		String _prenom =authentification.EffectuConnexion(userName,passWord).getPrenom();
+	    request.setAttribute("nom",_nom );
+		request.setAttribute("prenom",_prenom );
+		this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+		
+		
 	}
 
 }

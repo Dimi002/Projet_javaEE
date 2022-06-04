@@ -18,10 +18,10 @@
 
 	<c:import url="inc/header.jsp"/>
 	<c:import url="inc/nav.jsp"/>
-
+<p> le nom est ${ nom } et le prenom est ${ prenom }</p>
 	<div class="img">
         <div class="dim" id="qqq">
-            <form action="" method="post">
+            <form action="index" method="post">
                     <span>CONNEXION</span> 
                 <p><input type="text" placeholder=" EMAIL OU TELEPHONE" class="input" name="username"></p>
                 <p><input type="password" placeholder=" MOT DE PASSE " class="input" name="password"></p>
