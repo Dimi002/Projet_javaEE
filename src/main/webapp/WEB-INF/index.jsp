@@ -18,7 +18,7 @@
 
 	<c:import url="inc/header.jsp"/>
 	<c:import url="inc/nav.jsp"/>
-<p> le nom est ${ nom } et le prenom est ${ prenom }</p>
+	<p>${ sessionScope.nom } </p>
 	<div class="img">
         <div class="dim" id="qqq">
             <form action="index" method="post">

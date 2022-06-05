@@ -16,6 +16,9 @@
 	<c:import url="inc/header.jsp"/>
 	<c:import url="inc/nav.jsp"/>
 	
+	<c:if test="${!empty sessionScope.nom }">
+<p> bienvenue ${ sessionScope.nom }  ${ sessionScope.prenom }</p>
+    </c:if>
 	
 	code cours ici
 	
