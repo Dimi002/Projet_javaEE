@@ -1,0 +1,117 @@
+@charset "ISO-8859-1";
+
+.section_cours{
+	display: flex;
+}
+
+.section_gauche_cours{
+	width: 32%;
+	height: 550px;
+	display: block;
+}
+
+.section_droite_cours{
+	width: 68%;
+	height: 550px;
+	display: block;
+}
+
+.section_nom_classe{
+	width: 100%;
+	height: 100px;
+	background-color: #31A3DD;
+	color: white;
+	text-align: center;
+	padding-top: 15px;
+	font-size: 60px;
+	font-weight: bolt;
+}
+
+.section_nom_matieres{
+	overflow-y: scroll;
+}
+
+.section_recherche{
+	margin-top: 15px;
+    height: 75px;
+	margin-top: 2px;
+	background-color: rgb(245, 243, 243);
+	text-align: center;
+	display: flex;
+	padding-top: 25px;
+	padding-left: 10%;
+	margin-bottom: 10px;
+}
+
+.section_input_recherche{
+	width: 50%;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.section_recherche div{
+	width: 25%;
+    height: 30px;
+    border-radius: 10px;
+    background-color: #31A3DD;
+    color: white;
+    list-style: none;
+    text-decoration: none;
+    padding-top: 5px;
+}
+
+.section_recherche div a{
+	list-style: none;
+    text-decoration: none;
+    color: white;
+}
+.section_recherche div:hover{
+	background-color: rgb(6, 97, 158);
+}
+
+.section_liste_cours{
+	overflow-y: scroll;
+	padding-left: 20px;
+}
+
+.section_liste_cours a div{
+    height: 30px;
+    border-radius: 10px;
+    background-color: #31A3DD;
+    color: white;
+    list-style: none;
+    text-decoration: none;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.section_liste_cours a{
+	list-style: none;
+	text-decoration: none;
+}
+
+.section_titre_matiere{
+	list-style: none;
+    text-decoration: none;
+    height: 50px;
+    margin-top: 2px;
+    background-color: white;
+    color: rgb(6, 97, 158);
+    text-align: center;
+    text-transform: uppercase;
+    padding-top: 25px;
+    border: 1px solid rgb(6, 97, 158);
+    list-style-type: none;
+}
+
+.section_titre_matiere:hover{
+	background-color: #31A3DD;
+	color: white;
+}
+
+.section_nom_matieres a{
+	list-style: none;
+    text-decoration: none;
+    list-style-type: none;
+}
