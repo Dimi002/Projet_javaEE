@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import com.Document.bdd.Authentification;
 import com.Document.bdd.Utilisateur;
 import com.Document.bdd.Cours;
+import com.Document.bdd.MatiereEtid;
 
 /**
  * Servlet implementation class ControllerServlet
@@ -48,9 +49,10 @@ public class ControllerServlet extends HttpServlet {
 		}else if(action.equals("cours")){
 			Cours cour = new Cours();
 			String classe = request.getParameter("classe");
-			List<String> matieres = cour.GetListCours();
+			List<MatiereEtid> matieres = cour.GetListCours();
 			request.setAttribute("matieres",matieres );
-			request.setAttribute("classe",classe );
+			System.out.println("----->"+matieres);
+			request.setAttribute("classe",classe);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/cours.jsp").forward(request, response);
 		}else if(action.equals("epreuves")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/epreuves.jsp").forward(request, response);

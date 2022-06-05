@@ -8,10 +8,13 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
+ 
 
 public class Cours {
+
+	private List<MatiereEtid> listMatiereEtId = new ArrayList<MatiereEtid>();
 	
-    public List<String> GetListCours() {
+    public List<MatiereEtid> GetListCours() {
     	
     	try {
     		Class.forName("com.mysql.jdbc.Driver");
@@ -21,14 +24,14 @@ public class Cours {
     	Statement statement = null;
     	ResultSet resultat = null;
     	Utilisateur utilisateur = new Utilisateur();
-    	List<String> matieres = new ArrayList<String>();
+    	
          try {
         	 System.out.println("j'ai effectuer la requette new");
         	 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaee","root","");
         	 System.out.println("CONNECTE"); 
         	 statement = connection.createStatement();
         	 System.out.println("state");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT nom FROM matiere ");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT nom,id FROM matiere ");
            
              resultat = pstmt.executeQuery();
              System.out.println("requete");
@@ -36,8 +39,12 @@ public class Cours {
           
              
              while (resultat.next()) {
-            	 System.out.println("h‡‡‡");
-                 matieres.add(resultat.getString("nom"));
+            	 MatiereEtid matiereEtId = new MatiereEtid();
+            	 matiereEtId.setMatieres(resultat.getString("nom"));
+            	 matiereEtId.setId(resultat.getString("id"));
+            	 System.out.println("regarde"+matiereEtId.getMatieres());
+                 this.listMatiereEtId.add(matiereEtId);
+                 System.out.println("regardeBien"+listMatiereEtId);
                  System.out.println("ok");
                  
              }
@@ -55,10 +62,10 @@ public class Cours {
              } catch (SQLException ignore) {
              }
          }
-         return matieres;
+         System.out.println("regardeBienBien"+listMatiereEtId);
+         return listMatiereEtId;
     	
     	}
-    
     }
 
 
