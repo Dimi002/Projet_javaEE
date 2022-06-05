@@ -29,6 +29,7 @@
 
 .section_nom_matieres{
 	overflow-y: scroll;
+	height: 430px;
 }
 
 .section_recherche{

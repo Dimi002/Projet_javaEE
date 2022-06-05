@@ -11,7 +11,7 @@
 	<%@ include file="assets/css/nav.css" %>
 	<%@ include file="assets/css/courEpreuve.css" %>
 </style>
-</head>
+</head>   
 <body>
 
 	<c:import url="inc/header.jsp"/>
@@ -27,12 +27,12 @@
 			<article class="section_nom_matieres">
 			
 			 <c:forEach var="item" items="${ matieres }">
-                <a><div class="section_titre_matiere">   <c:out value="${ item }" /> </div></a>
+                <a href="?action=cours&&classe=${classe}&&matiere=${item.getId()}"> <div class="section_titre_matiere">  <c:out value="${ item.getMatieres() }" /> </div></a>
              </c:forEach>
 				
 			</article>
 		
-		</section>
+		</section> 
 		
 		
 		<section class="section_droite_cours">
@@ -43,11 +43,10 @@
 			<article class="section_liste_cours">
 				<table>
 					<tr>
-						<td width="10%"> image </td>
+						<td width="15%"> image </td>
 						<td width="38%"> nom </td>
-						<td width="25%"> date </td>
-						<td width="12%"> <a href="" class="telechager"><div>voir</div></a> </td>
-						<td width="12%"> <a href="" class="telechager"><div>telecharger</div></a> </td>
+						<td width="35%"> date </td>
+						<td width="12%"> <a href="" download="src/main/webapp/WEB-INF/documents/TP5_JSTL.pdf" class="telechager"><div>telecharger</div></a> </td>
 					</tr>
 				</table>
 			</article>
