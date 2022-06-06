@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.Document.bdd.Authentification;
+import com.Document.bdd.Classe;
 import com.Document.bdd.Utilisateur;
 import com.Document.bdd.Cours;
+import com.Document.bdd.Epreuve;
 import com.Document.bdd.MatiereEtid;
 
 /**
@@ -41,11 +43,19 @@ public class ControllerServlet extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
 		}else if(action.equals("cours")){
 			Cours cour = new Cours();
+			Epreuve epreuve = new Epreuve();
+			Classe _classe = new Classe();
 			String classe = request.getParameter("classe");
+			String idClasse = _classe.getIdClasse(classe);
 			List<MatiereEtid> matieres = cour.GetListCours();
 			request.setAttribute("matieres",matieres );
 			System.out.println("----->"+matieres);
 			request.setAttribute("classe",classe);
+			
+			//------------------------ GESTION DES EPREUVES ----------------------
+			String matiere = request.getParameter("matiere");
+			List<Epreuve> epreuves = epreuve.getEpreuve(idClasse,matiere);
+			request.setAttribute("epreuves",epreuves );
 			this.getServletContext().getRequestDispatcher("/WEB-INF/cours.jsp").forward(request, response);
 		}else if(action.equals("epreuves")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/epreuves.jsp").forward(request, response);

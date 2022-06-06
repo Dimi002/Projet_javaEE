@@ -1,0 +1,346 @@
+nav{
+    height: 70px;
+    width: 94%;
+    background-color: #31A3DD;
+    display: flex;
+    justify-content: space-between ;
+    align-items: center;
+    padding-left: 2%;
+    padding-right: 4%;
+    color: white;
+    position: fixed;
+    z-index: 2;
+    
+}
+body{
+    margin: 0px;
+}
+nav a{
+    list-style-type: none;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+}
+a{
+    list-style-type: none;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+@media screen and (max-width: 700px){
+    nav h1{
+        font-size: 25px;
+    }
+    .div1, .div2{
+        display: block;
+        width: 84%;
+        margin-bottom: 40px;
+        padding-left: 10px;
+    }
+    
+}
+@media screen and (max-width: 600px){
+    nav h1{
+        font-size: 18px;
+    }
+}
+@media screen and (max-width: 400px){
+    nav h1{
+        font-size: 15px;
+    }
+}
+section{
+    display: flex;
+}
+.gauche{
+    margin-top: 72px;
+    width:20%;
+    left: 0;
+    background-color: #31A3DD;
+    overflow: hidden;
+    overflow-y: scroll;
+    position: fixed;
+    z-index: 1;
+   height: 90%;
+   
+    
+}
+.droite{
+    width:78%;
+    height: 500px;
+    margin-left: 21%;
+    margin-top: 100px;
+}
+article img{
+    height: 200px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.champ{
+    height: 50px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    background-color: #27a1df;
+    box-shadow: 8px 8px 30px 0 #4685a5;
+
+    text-align: center;
+    padding-top: 30px;
+    margin-bottom: 30px;
+    color: white;
+    
+}
+.champ:hover{
+    color: #31A3DD;
+    background-color: rgb(209, 217, 221);
+    transition: 1s;
+    border-bottom: 7px solid #31A3DD;
+}
+
+.div1{
+    display: flex;
+    width: 100%;
+    margin-bottom: 40px;
+}
+.div2{
+    display: flex;
+    width: 100%;
+    
+}
+.champ1{
+    width: 30%;
+    height: auto;
+    box-shadow: 1px 8px 30px -1px #bcc3c7 ;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 20px;
+    text-align: center;
+    text-align: justify;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+}
+.champ2{
+    width: 30%;
+    height: auto;
+    box-shadow: 1px 8px 30px -1px #bcc3c7 ;
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: center;
+    text-align: justify;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+}
+.champ1:hover{
+    transform: scale(1.1);
+    transition: 1s;
+}
+.champ2:hover{
+    transform: scale(1.1);
+    transition: 1s;
+    
+}
+.champ1 div, .champ2 div{
+    text-transform: none;
+    color: black;
+}
+.h1{
+    text-transform: uppercase;
+    color: #369dd1;
+    text-align: center;
+}
+
+.profil{
+    width: 100%;
+    height: 100%;
+    box-shadow: 2px 8px 60px -2px #bcc3c7;
+    display: flex;
+}
+.profil1{
+    width: 40%;
+    height: 90%;
+    background-color: rgb(245, 245, 248);
+    background: url("../image/eleve.jpg");
+    padding-top: 50px;
+    padding-left: 4%;
+}
+.profil1 div{
+    color: white;
+    height: 40px;
+    background: #31A3DD;
+    width: 30%;
+    text-align: center;
+    padding-top: 15px;
+    border-radius: 10px;
+}
+.profil1 div:hover{
+
+    transform: scale(1.1);
+}
+.profil2{
+    width: 65%;
+    height: 96%;
+
+    padding-left: 10px;
+    padding-top: 2%;
+    display: flex;
+    
+}
+.profil_name{
+    width: 25%;
+    text-transform: uppercase;
+}
+.profil_input{
+    width: 66%;
+}
+.profil_name > p , .profil_input>p{
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+.profil_input input{
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #31A3DD;
+    text-align: center;
+    text-transform: uppercase;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+
+.profil_epreuve{
+    width: auto;
+    height: auto;
+    box-shadow: 2px 8px 60px -2px #bcc3c7;
+    padding-left: 2%;
+    word-spacing: 10px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+}
+.profil_epreuve input[type="file"], .profil_cour input[type="file"]{
+    height: 30px;
+    text-align: center;
+    width: 30%;
+    border-radius: 5px;
+    background-color: rgb(186, 213, 229);
+    
+}
+
+.profil_matiere input[type="text"]{
+    height: 30px;
+    text-align: center;
+    width: 30%;
+    border-radius: 5px;
+    margin-right: 42%;
+    border: 1px solid #31A3DD;
+} 
+
+.profil_utilisateur input[type="text"], .profil_utilisateur input[type="email"], .profil_utilisateur input[type="password"]{
+    height: 30px;
+    text-align: center;
+    width: 18%;
+    border-radius: 5px;
+    border: 1px solid #31A3DD;
+} 
+
+.profil_epreuve select, .profil_cour select{
+    height: 30px;
+    text-align: center;
+    width: 15%;
+    border-radius: 5px;
+    border: 1px solid #31A3DD;
+    
+}
+
+.profil_utilisateur select{
+    height: 30px;
+    text-align: center;
+    width: 15%;
+    border-radius: 5px;
+    border: 1px solid #31A3DD;
+    margin-right: 4%;
+}
+
+
+.profil_epreuve input[type="submit"], .profil_cour input[type="submit"], .profil_matiere input[type="submit"], .profil_utilisateur input[type="submit"]{
+    height: 30px;
+    text-align: center;
+    width: 13%;
+    border-radius: 5px;
+    background-color: #31A3DD;
+    color: white;
+}
+
+
+
+.profil_cour{
+    width: auto;
+    height: auto;
+    box-shadow: 2px 8px 60px -2px #bcc3c7;
+    padding-left: 2%;
+    word-spacing: 10px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+}
+.p{
+    color: rgb(15, 207, 89);
+    font-family: monospace;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.profil_matiere{
+    width: auto;
+    height: auto;
+    box-shadow: 2px 8px 60px -2px #bcc3c7;
+    padding-left: 2%;
+    word-spacing: 10px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+}
+
+.profil_utilisateur{
+    width: auto;
+    height: auto;
+    box-shadow: 2px 8px 60px -2px #bcc3c7;
+    padding-left: 2%;
+    word-spacing: 10px;
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+}
+
+.membre_admin{
+    width: auto;
+    height: auto;
+    box-shadow: 2px 8px 60px -2px #bcc3c7;
+    padding: 10px;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+}
+.membre_admin h1, .membre_utilisateur h1{
+    text-align: center;
+    text-transform: uppercase;
+}
+.membre_utilisateur{
+    width: auto;
+    height: auto;
+    box-shadow: 2px 8px 60px -2px #bcc3c7;
+    padding: 10px;
+    padding-bottom: 15px;
+}
+.thead{
+    background-color: #31A3DD;
+    border: 2px solid #31A3DD;
+    height: 60px;
+    color: white;
+}
+.table{
+    border: 2px solid #31A3DD;
+}
+td{
+    text-align: center;
+}

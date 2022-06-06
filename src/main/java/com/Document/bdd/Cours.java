@@ -13,6 +13,7 @@ import java.util.List;
 public class Cours {
 
 	private List<MatiereEtid> listMatiereEtId = new ArrayList<MatiereEtid>();
+	private List<Epreuve> listEpreuve = new ArrayList<Epreuve>();
 	
     public List<MatiereEtid> GetListCours() {
     	
@@ -52,13 +53,14 @@ public class Cours {
          } finally {
              
              try {
+            	 
                  if (resultat != null)
                      resultat.close();
                  if (statement != null)
                      statement.close();
                  if (connection != null)
                      connection.close();
-                
+                 
              } catch (SQLException ignore) {
              }
          }
@@ -66,7 +68,11 @@ public class Cours {
          return listMatiereEtId;
     	
     	}
+    
+   
+    
     }
+    
 
 
 

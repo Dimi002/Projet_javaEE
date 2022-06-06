@@ -42,12 +42,17 @@
 			
 			<article class="section_liste_cours">
 				<table>
-					<tr>
-						<td width="15%"> image </td>
-						<td width="38%"> nom </td>
-						<td width="35%"> date </td>
-						<td width="12%"> <a href="" download="src/main/webapp/WEB-INF/documents/TP5_JSTL.pdf" class="telechager"><div>telecharger</div></a> </td>
-					</tr>
+					
+			 <c:forEach var="item" items="${ epreuves }">
+			 <tr>
+                        <td width="15%"> image </td>
+						<td width="38%"> ${item.getNom()} </td>
+						<td width="35%"> ${item.getDate()} </td>
+						<td width="12%"> <a href="" download="${item.getLien()}" class="telechager"><div>telecharger</div></a> </td>
+		     </tr>		
+             </c:forEach>
+						
+					 
 				</table>
 			</article>
 		</section>
