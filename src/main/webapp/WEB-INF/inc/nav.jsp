@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
     
 <nav>
     <label for="menu-mob" class="menu-mob">Menu</label>
@@ -32,7 +32,12 @@
         </li>
         <li class="menu-propos"> <a href="?action=index">a propos</a></li>
     </ul>
+    	<c:if test="${!empty sessionScope.nom }">
+    <a href="?action=inscription&&disconnect=end" class="I_btn">deconnexion</a>
+          </c:if>
+          <c:if test="${empty sessionScope.nom }">
     <a href="?action=inscription" class="I_btn">inscription</a>
+          </c:if>
 </nav>
     
     

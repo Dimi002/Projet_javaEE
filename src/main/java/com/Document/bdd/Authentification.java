@@ -12,11 +12,13 @@ import java.util.List;
 public class Authentification {
 	private String email;
 	private String Mot_de_passe;
+	private boolean etat;
 	
 	public Authentification() {}
     public Authentification(String mail, String mdp) {
     	this.email=mail;
     	this.Mot_de_passe=mdp;
+    	this.etat=false;
     }	
     public Utilisateur EffectuConnexion(String mail, String mdp) {
     	
@@ -28,6 +30,7 @@ public class Authentification {
     	Statement statement = null;
     	ResultSet resultat = null;
     	Utilisateur utilisateur = new Utilisateur();
+    	int taille=0;
     	
          try {
         	 System.out.println("j'ai effectuer la requette new");
@@ -41,7 +44,7 @@ public class Authentification {
              resultat = pstmt.executeQuery();
              System.out.println("requete");
              System.out.println("hello"+mail);
-          
+               taille=resultat.getRow();
              
              while (resultat.next()) {
             	 System.out.println("h‡‡‡");
@@ -49,7 +52,8 @@ public class Authentification {
                  System.out.println("hii"+nom);
                  String prenom = resultat.getString("prenom");
                  System.out.println("hii"+prenom);
-                 
+                 this.etat=true;
+
                  utilisateur.setNom(nom);
                  utilisateur.setPrenom(prenom);
                  
@@ -69,8 +73,9 @@ public class Authentification {
              } catch (SQLException ignore) {
              }
          }
-         return utilisateur;
-    	
+         if (etat) {
+         return utilisateur;}
+         else { return null;}
     	}
     
     }

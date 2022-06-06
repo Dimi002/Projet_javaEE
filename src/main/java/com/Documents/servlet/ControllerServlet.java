@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.Document.bdd.Authentification;
 import com.Document.bdd.Classe;
@@ -40,6 +41,12 @@ public class ControllerServlet extends HttpServlet {
 		if(action==null || action.equals("index")) { 
 			this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 		}else if(action.equals("inscription")){
+			String disconnect=request.getParameter("disconnect");
+			if(disconnect.equals("end")) {
+				HttpSession session = request.getSession();
+				session.invalidate();
+				this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+			}
 			this.getServletContext().getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
 		}else if(action.equals("cours")){
 			Cours cour = new Cours();
@@ -70,17 +77,27 @@ public class ControllerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		//doGet(request, response);
 		
+		
 		String action=request.getParameter("action");
 		if(action==null || action.equals("index")) { 
 			String userName = request.getParameter("username");
 			String passWord = request.getParameter("password");
 			
 			Authentification authentification = new Authentification();
-			String _nom =authentification.EffectuConnexion(userName,passWord).getNom();
-			String _prenom =authentification.EffectuConnexion(userName,passWord).getPrenom();
-		    request.setAttribute("nom",_nom );
-			request.setAttribute("prenom",_prenom );
-			this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+		Utilisateur user ;
+		user=authentification.EffectuConnexion(userName,passWord);
+//		String _nom =authentification.EffectuConnexion(userName,passWord).getNom();
+//		String _prenom =authentification.EffectuConnexion(userName,passWord).getPrenom();
+		if(user!=null ) {
+			HttpSession Session = request.getSession();
+			Session.setAttribute("nom", user.getNom());
+			Session.setAttribute("prenom", user.getPrenom());
+			this.getServletContext().getRequestDispatcher("/WEB-INF/cours.jsp").forward(request, response);
+			}else {
+//	    request.setAttribute("nom",_nom );
+//		request.setAttribute("prenom",_prenom );
+		this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+			}
 		}else if(action.equals("inscription")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
 		}else if(action.equals("cours")){
