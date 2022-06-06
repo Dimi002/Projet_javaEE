@@ -26,9 +26,12 @@
 			</article>
 			
 			<article class="section_nom_matieres">
-			
+			 <c:forEach var="item" items="${ matieres }">
+			  <a href="?action=cours&&classe=${classe}&&matiere=${item.getId()}"> <div class="section_titre_matiere"> <c:out value="${ item.getMatieres() }" /> </div></a>
+				
+             </c:forEach>
 			 
-                <a href="?action=cours&&classe=${classe}&&matiere=${item.getId()}"> <div class="section_titre_matiere"> <c:out value="${ item.getMatieres() }" /> </div></a>
+               
              
 				
 			</article>
