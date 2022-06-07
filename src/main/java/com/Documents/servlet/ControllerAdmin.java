@@ -9,28 +9,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.Document.bdd.Classe;
+import com.Document.bdd.Classe; 
 import com.Document.bdd.ClasseEtId;
 import com.Document.bdd.Cours;
 import com.Document.bdd.MatiereEtid;
 
 
+
+ 
 @WebServlet("/Controlleradmin")
-public class ControllerAdmin extends HttpServlet {
+@MultipartConfig(
+		location = "/src/main/webapp/documents",  
+		fileSizeThreshold=1024*1024, //1MO
+		maxFileSize= 1024*1024*10,   //10MO
+		maxRequestSize = 1024*1024*11  //11Mo
+		)
+public class ControllerAdmin extends HttpServlet { 
 	private static final long serialVersionUID = 1L;
 	
-	    public static final int TAILLE_TAMPON = 10240;
-	    public static final String CHEMIN_FICHIERS = "/Tp_javaEE/src/main/webapp/WEB-INF/documents/"; // A changer
+	   // public static final int TAILLE_TAMPON = 10240; 
+	   // public static final String CHEMIN_FICHIERS = "/src/main/webapp/WEB-INF/documents/"; // A changer
 	 
     
     public ControllerAdmin() {
-        super();
+        super(); 
         // TODO Auto-generated constructor stub 
     }
 
@@ -48,7 +57,7 @@ public class ControllerAdmin extends HttpServlet {
 			List<MatiereEtid> matieres = cour.GetListCours();
 			request.setAttribute("matieres",matieres );
 			Classe classe = new Classe();
-			List<ClasseEtId> listclassesetid = new ArrayList<ClasseEtId>();
+			List<ClasseEtId> listclassesetid = new ArrayList<ClasseEtId>();  
 		    listclassesetid = classe.listIdClasse();
 		    request.setAttribute("listclassesetid",listclassesetid );
 		    
@@ -63,7 +72,7 @@ public class ControllerAdmin extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/membre.jsp").forward(request, response);
 		}else {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/404.jsp").forward(request, response);
-		}		
+		}		 
 	}
 
 	/**
@@ -73,29 +82,45 @@ public class ControllerAdmin extends HttpServlet {
 		String action=request.getParameter("action");
 
 		if(action==null || action.equals("index")) { 
-			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);		}else if(action.equals("inscription")){
-		}else if(action.equals("ajout")){
+			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);	
+			}else if(action.equals("inscription")){
+		}
+			else if(action.equals("ajout")){
 			
-			String classes = request.getParameter("classes");
-			String matieres = request.getParameter("matieres");
-			Part part = request.getPart("fichier");
-			String nomFichier = getNomFichier(part);
+			//String classes = request.getParameter("classes");
+			//String matieres = request.getParameter("matieres");
+			//Part part = request.getPart("fichier");
+			//String nomFichier = getNomFichier(part);
 			
 			// Si on a bien un fichier
-	        if (nomFichier != null && !nomFichier.isEmpty()) {
-	            String nomChamp = part.getName();
+	        //if (nomFichier != null && !nomFichier.isEmpty()) {
+	         //   String nomChamp = part.getName();
 	            // Corrige un bug du fonctionnement d'Internet Explorer
-	             nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1)
-	                    .substring(nomFichier.lastIndexOf('\\') + 1);
+	           //  nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1)
+	                //    .substring(nomFichier.lastIndexOf('\\') + 1);
 
 	            // On écrit définitivement le fichier sur le disque
-	            ecrireFichier(part, nomFichier, CHEMIN_FICHIERS);
+	           // ecrireFichier(part, nomFichier, CHEMIN_FICHIERS);
 
-	            request.setAttribute(nomChamp, nomFichier);
-	        }
+	           // request.setAttribute(nomChamp, nomFichier);
+	       // }
 	        
-			request.setAttribute("classes",classes);
-			request.setAttribute("matieres",matieres );
+			//request.setAttribute("classes",classes);
+			//request.setAttribute("matieres",matieres );
+			//----------------------------------------------------------------------------------------------	
+				String classes = request.getParameter("classes");
+				String matieres = request.getParameter("matieres");
+				String message = "";
+				
+				try {
+				Part part = request.getPart("fichier");
+				part.write(getFileName(part));
+				message="your filr has been uploaded successfully!";
+				}catch(Exception ex){
+					message = "Error Uploading file"+ex.getMessage();
+				}
+				request.setAttribute("message",message);
+				
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/ajout.jsp").forward(request, response);
 		}else if(action.equals("profil")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/profil.jsp").forward(request, response);
@@ -109,37 +134,18 @@ public class ControllerAdmin extends HttpServlet {
 	}
 	
 	
-	 private void ecrireFichier( Part part, String nomFichier, String chemin ) throws IOException {
-	        BufferedInputStream entree = null;
-	        BufferedOutputStream sortie = null;
-	        try {
-	            entree = new BufferedInputStream(part.getInputStream(), TAILLE_TAMPON);
-	            sortie = new BufferedOutputStream(new FileOutputStream(new File(chemin + nomFichier)), TAILLE_TAMPON);
-
-	            byte[] tampon = new byte[TAILLE_TAMPON];
-	            int longueur;
-	            while ((longueur = entree.read(tampon)) > 0) {
-	                sortie.write(tampon, 0, longueur);
-	            }
-	        } finally {
-	            try {
-	                sortie.close();
-	            } catch (IOException ignore) {
-	            }
-	            try {
-	                entree.close();
-	            } catch (IOException ignore) {
-	            }
-	        }
-	    }
+	
 	 
-	  private static String getNomFichier( Part part ) {
-	        for ( String contentDisposition : part.getHeader( "content-disposition" ).split( ";" ) ) {
-	            if ( contentDisposition.trim().startsWith( "filename" ) ) {
-	                return contentDisposition.substring( contentDisposition.indexOf( '=' ) + 1 ).trim().replace( "\"", "" );
+	  private static String getFileName( Part part ) {
+	         String contentDisposition = part.getHeader( "content-disposition" ); 
+	            if ( !contentDisposition.contains( "filename=" ) ) {
+	                 return null; 
 	            }
+	            int beginIndex = contentDisposition.indexOf("filename=" )+10;
+	            int endIndex = contentDisposition.length() -1;
+	            return contentDisposition.substring(beginIndex, endIndex); 
 	        }
-	        return null;
-	    }   
+	      
+	       
 
 }

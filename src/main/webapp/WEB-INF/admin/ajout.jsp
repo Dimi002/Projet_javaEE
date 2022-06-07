@@ -21,9 +21,9 @@
 
             
 
- <c:if test="${ !empty fichier }"><p><c:out value="Le fichier ${ fichier }  a été uploadé !" /></p></c:if>
+ <c:out value="${ message }" />
                     <form action="" method="post" enctype="multipart/form-data">
-                        Nom: <input type="file"  name="fichier" name ="fichier">
+                        Nom: <input type="file"  name="fichier">
                         Classe: <select name="classes" id="">
                         
              <c:forEach var="item" items="${ listclassesetid }">

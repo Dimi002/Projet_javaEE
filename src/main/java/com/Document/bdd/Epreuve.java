@@ -91,8 +91,8 @@ public class Epreuve {
 	        	 System.out.println("state2");
 	        	  PreparedStatement pstmt = connection.prepareStatement("INSERT INTO epreuve (nom,classe,matiere ) VALUES (?,?,?); ");
 	              
-	              pstmt.setString(1, classe);
-	              pstmt.setString(2, matiere);
+	             // pstmt.setString(1, classe);
+	             // pstmt.setString(2, matiere);
 	           
 	             resultat = pstmt.executeQuery();
 	             System.out.println("insertion reussi");
