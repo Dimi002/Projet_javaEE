@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.Documents.beans.Utilisateur;
  
 
 public class Cours {

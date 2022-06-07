@@ -1,5 +1,6 @@
 package com.Document.bdd;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,6 +9,8 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.Documents.beans.Utilisateur;
 
 public class Authentification {
 	private String email;
@@ -38,7 +41,7 @@ public class Authentification {
         	 System.out.println("CONNECTE"); 
         	 statement = connection.createStatement();
         	 System.out.println("state");
-            PreparedStatement pstmt = connection.prepareStatement("SELECT nom,prenom FROM utilisateur WHERE email=? AND mot_de_passe=? ;");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT nom,prenom,statut FROM utilisateur WHERE email=? AND mot_de_passe=? ;");
             pstmt.setString(1, mail);
             pstmt.setString(2, mdp);
              resultat = pstmt.executeQuery();
@@ -51,11 +54,13 @@ public class Authentification {
                  String nom = resultat.getString("nom");
                  System.out.println("hii"+nom);
                  String prenom = resultat.getString("prenom");
+                 String statut= resultat.getString("statut");
                  System.out.println("hii"+prenom);
                  this.etat=true;
 
                  utilisateur.setNom(nom);
                  utilisateur.setPrenom(prenom);
+                 utilisateur.setStatut(statut);
                  
                  
              }

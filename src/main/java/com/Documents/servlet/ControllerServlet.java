@@ -12,7 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import com.Document.bdd.Authentification;
 import com.Document.bdd.Classe;
-import com.Document.bdd.Utilisateur;
+import com.Documents.beans.Utilisateur;
+
+import dao.UderDao;
+
 import com.Document.bdd.Cours;
 import com.Document.bdd.Epreuve;
 import com.Document.bdd.MatiereEtid;
@@ -88,14 +91,17 @@ public class ControllerServlet extends HttpServlet {
 			
 			Authentification authentification = new Authentification();
 		Utilisateur user ;
-		user=authentification.EffectuConnexion(userName,passWord);
+		  user=authentification.EffectuConnexion(userName,passWord);
 //		String _nom =authentification.EffectuConnexion(userName,passWord).getNom();
 //		String _prenom =authentification.EffectuConnexion(userName,passWord).getPrenom();
 		if(user!=null ) {
 			HttpSession Session = request.getSession();
 			Session.setAttribute("nom", user.getNom());
 			Session.setAttribute("prenom", user.getPrenom());
+			if(user.getStatut()=="client")
 			this.getServletContext().getRequestDispatcher("/WEB-INF/cours.jsp").forward(request, response);
+			
+			this.getServletContext().getRequestDispatcher("/admin/").forward(request, response);
 			}else {
 //	    request.setAttribute("nom",_nom );
 //		request.setAttribute("prenom",_prenom );
@@ -106,7 +112,36 @@ public class ControllerServlet extends HttpServlet {
 		}else if(action.equals("cours")){
 			
 			this.getServletContext().getRequestDispatcher("/WEB-INF/cours.jsp").forward(request, response);
-		}else if(action.equals("epreuves")){
+		}else if(action.equals("new")) {
+			
+				String nom = request.getParameter("nom");
+				String prenom = request.getParameter("prenom");
+				String telephone = request.getParameter("telephone");
+				String email = request.getParameter("email");
+				String password = request.getParameter("mot_de_passe");
+				String passwordconfirm = request.getParameter("passwordconfirm");
+				System.out.println(nom);
+				
+				Utilisateur utilisateur = new Utilisateur( );
+				
+				utilisateur.setNom(nom);
+				utilisateur.setPrenom(prenom);
+				utilisateur.setTelephone(telephone);
+				utilisateur.setEmail(email);
+				utilisateur.setMotDePasse(password);
+				
+				
+				try {
+					UderDao.addUser(utilisateur);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					this.getServletContext().getRequestDispatcher("/WEB-INF/404.jsp").forward(request, response);
+				}
+
+		}
+		else if(action.equals("epreuves")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/epreuves.jsp").forward(request, response);
 		}else {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/404.jsp").forward(request, response);
