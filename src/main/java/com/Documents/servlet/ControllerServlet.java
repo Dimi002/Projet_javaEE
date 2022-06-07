@@ -42,6 +42,9 @@ public class ControllerServlet extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
 		}else if(action.equals("inscription")){
 			String disconnect=request.getParameter("disconnect");
+			
+			    disconnect= !(disconnect==null) ? disconnect : "noconnect";
+			    
 			if(disconnect.equals("end")) {
 				HttpSession session = request.getSession();
 				session.invalidate();

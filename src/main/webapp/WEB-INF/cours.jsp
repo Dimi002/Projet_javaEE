@@ -52,7 +52,15 @@
                         <td width="15%"> image </td>
 						<td width="38%"> ${item.getNom()} </td>
 						<td width="35%"> ${item.getDate()} </td>
-						<td width="12%"> <a href="" download="${item.getLien()}" class="telechager"><div>telecharger</div></a> </td>
+						<td width="12%"> 
+						<c:if test="${!empty sessionScope.nom }">
+						<a href="" download="${item.getLien()}" class="telechager"><div>telecharger</div></a> 
+						</c:if>
+						 <c:if test="${empty sessionScope.nom }">
+                        <a href="?action=index" class="I_btn">telecharger</a>
+                          </c:if>
+						
+						</td>
 		     </tr>		
              </c:forEach>
 						

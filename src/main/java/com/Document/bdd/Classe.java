@@ -6,13 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Classe {
 	private String id;
 	private String nom;
 	private String Date_creation;
-	private String idClasse ;
+
 	 public String getIdClasse(String classeName) {
 	    	
 	    	try {
@@ -42,7 +43,7 @@ public class Classe {
 	             
 	             while (resultat.next()) {
 	            	
-	            	 idClasse=resultat.getString("id"); 
+	            	 this.id=resultat.getString("id"); 
 	             }
 	         } catch (SQLException e) {
 	         } finally {
@@ -58,10 +59,58 @@ public class Classe {
 	             } catch (SQLException ignore) {
 	             }
 	         }
-	         System.out.println("le id est ------------------------------->"+idClasse);
+	         System.out.println("le id est ------------------------------->"+id);
 	         System.out.println("la classe  est ----------------------------->"+classeName);
-	         return idClasse;
+	         return id;
 	    	
+	    }
+	 
+	 public List<ClasseEtId> listIdClasse() {
+		 List<ClasseEtId> listidclasse = new ArrayList<ClasseEtId>();
+		 
+	    	try {
+	    		Class.forName("com.mysql.jdbc.Driver");
+	    	}catch(ClassNotFoundException e) {}
+	    	
+	    	Connection connection  = null;
+	    	Statement statement = null;
+	    	ResultSet resultat = null;
+	    	Utilisateur utilisateur = new Utilisateur();
+	    	
+	         try {
+	        	 System.out.println("j'ai effectuer la requette new2");
+	        	 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaee","root","");
+	        	 System.out.println("CONNECTE2"); 
+	        	 statement = connection.createStatement();
+	        	 System.out.println("state2");
+	        	  PreparedStatement pstmt = connection.prepareStatement("SELECT id,nom FROM classe ;");
+	            
+	             resultat = pstmt.executeQuery();
+	             System.out.println("requete2");
+	            
+	             while (resultat.next()) {
+	            	 ClasseEtId classeEtId = new ClasseEtId();
+	            	 classeEtId.setId(resultat.getString("id"));
+	            	 classeEtId.setClasse(resultat.getString("nom"));
+	            	 listidclasse.add(classeEtId);
+	             }
+	         } catch (SQLException e) {
+	         } finally {
+	             
+	             try {
+	                 if (resultat != null)
+	                     resultat.close();
+	                 if (statement != null)
+	                     statement.close();
+	                 if (connection != null)
+	                     connection.close();
+	                
+	             } catch (SQLException ignore) {
+	             }
+	         }
+	         System.out.println("le id est ------------------------------->"+id);
+	   
+	         return listidclasse;
 	    }
 	
 	public String getId() {

@@ -21,27 +21,23 @@
 
             
 
-
-                    <form action="" method="post" enctype="multipart/form-data">
-                        Nom: <input type="file"  name="nom" >
-                        Classe: <select name="epreuve" id="">
-                        <?php
-                            while($item=$classes->fetch()){
-                        ?>
-                                    <option value="<?php echo  $item['id']; ?>"><?php echo  $item['nom']; ?></option>
-                        <?php
-                            }
-                        ?>
-                                </select>
-                        Matiere: <select name="matiere" id="">
-                        <?php
-                            while($item=$matieres->fetch()){
-                        ?>
-                                    <option value="<?php echo  $item['id']; ?>"><?php echo  $item['nom']; ?></option>
-                        <?php
-                            }
-                        ?>
-                                </select>
+ <c:if test="${ !empty fichier }"><p><c:out value="Le fichier ${ fichier }  a été uploadé !" /></p></c:if>
+                    <form action="?action=ajout" method="post" enctype="multipart/form-data">
+                        Nom: <input type="file"  name="fichier" name ="fichier">
+                        Classe: <select name="classes" id="">
+                        
+             <c:forEach var="item" items="${ listclassesetid }">
+			 		<option value="${item.getId()}"> <c:out value="${ item.getClasse() }" /> </option>
+             </c:forEach>
+                        
+               </select>
+                        Matiere: <select name="matieres" id="">
+             <c:forEach var="item" items="${ matieres }">
+			         <option value="${item.getId()}"> <c:out value="${ item.getMatieres() }" /> </option>
+             </c:forEach>
+                            
+                        
+                     </select>
                         <input type="submit" value="ajouter">
                     </form>
 
