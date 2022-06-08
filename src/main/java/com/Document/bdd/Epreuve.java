@@ -8,8 +8,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
-public class Epreuve {
+
+
+ public class Epreuve {
 	
 	private String nom;
 	private String date;
@@ -72,7 +76,7 @@ public class Epreuve {
 	    	
 	    }
 	 
-	 public List<Epreuve> ajoutEpreuve(String nom, String idclasse, String idmatiere) {
+	 public boolean ajoutEpreuve(String nom, String idclasse, String idmatiere) {
 	    	
 	    	try {
 	    		Class.forName("com.mysql.jdbc.Driver");
@@ -86,32 +90,29 @@ public class Epreuve {
 	         try {
 	        	 System.out.println("j'ai effectuer la requette new2");
 	        	 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaee","root","");
-	        	 System.out.println("CONNECTE2"); 
+	        	 System.out.println("CONNECTE2 INsert"); 
 	        	 statement = connection.createStatement();
 	        	 System.out.println("state2");
-	        	  PreparedStatement pstmt = connection.prepareStatement("INSERT INTO epreuve (nom,classe,matiere ) VALUES (?,?,?); ");
+	        	 Date dt = new  Date();
+	        	 SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
+	        	 String date = s.format(dt);
+	        	  PreparedStatement pstmt = connection.prepareStatement("INSERT INTO epreuve(nom,classe,matiere,url_epreuve) VALUES (?,?,?,?) ;");
 	              
-	             // pstmt.setString(1, classe);
-	             // pstmt.setString(2, matiere);
-	           
-	             resultat = pstmt.executeQuery();
+	              pstmt.setString(1, nom);
+	              pstmt.setString(2, idclasse);
+	              pstmt.setString(3, idmatiere); 
+	              //pstmt.setString(4, date);
+	              pstmt.setString(4, "documents/"+nom); 
+	              
+	              System.out.println("insertion  pret "+nom+""+Integer.parseInt(idclasse)+""+Integer.parseInt(idmatiere)+""+date); 
+	              pstmt.executeUpdate();
 	             System.out.println("insertion reussi");
-	            
-	          
-	             
-	             while (resultat.next()) {
-	            	 Epreuve epreuve = new Epreuve();
-	            	 epreuve.setNom(resultat.getString("nom"));
-	            	 epreuve.setDate(resultat.getString("date_depot"));
-	            	 epreuve.setLien(resultat.getString("url_epreuve"));
-	            	 System.out.println("regarde"+epreuve.getNom());
-	                 this.listEpreuve.add(epreuve);
-	                 System.out.println("regardeBien2"+listEpreuve);
-	                 System.out.println("ok2");
-	                 
-	             }
+	      
 	         } catch (SQLException e) {
-	         } finally {
+	        	 System.out.println("regarde ici -------");
+	        	 e.printStackTrace();
+	        	 
+                   } finally {
 	             
 	             try {
 	                 if (resultat != null)
@@ -120,12 +121,14 @@ public class Epreuve {
 	                     statement.close();
 	                 if (connection != null)
 	                     connection.close();
-	                
+	                return false;
 	             } catch (SQLException ignore) {
+	            	 ignore.printStackTrace();
 	             }
+	             
 	         }
 	       
-	         return listEpreuve;
+	         return true;
 	    	
 	    }
 	 

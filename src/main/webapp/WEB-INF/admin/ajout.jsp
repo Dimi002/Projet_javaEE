@@ -20,18 +20,19 @@
                     <center><h2>AJOUTER UNE EPREUVE</h2></center> 
 
             
-
- <c:out value="${ message }" />
-                    <form action="" method="post" enctype="multipart/form-data">
+<c:out value="${ message  }" />
+ 
+                    <form action="?action=ajout" method="post" enctype="multipart/form-data">
+                    
                         Nom: <input type="file"  name="fichier">
-                        Classe: <select name="classes" id="">
+                        Classe: <select name="idclasses" >
                         
              <c:forEach var="item" items="${ listclassesetid }">
 			 		<option value="${item.getId()}"> <c:out value="${ item.getClasse() }" /> </option>
              </c:forEach>
                         
                </select>
-                        Matiere: <select name="matieres" id="">
+                        Matiere: <select name="idmatieres">
              <c:forEach var="item" items="${ matieres }">
 			         <option value="${item.getId()}"> <c:out value="${ item.getMatieres() }" /> </option>
              </c:forEach>

@@ -37,9 +37,12 @@ public class ControllerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("hello llllllllllllllllllll");
 		String action=request.getParameter("action");
 		if(action==null || action.equals("index")) { 
+			System.out.println("hello wojsjhdfjhdfjh");
 			this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+			
 		}else if(action.equals("inscription")){
 			String disconnect=request.getParameter("disconnect");
 			
@@ -70,7 +73,9 @@ public class ControllerServlet extends HttpServlet {
 		}else if(action.equals("epreuves")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/epreuves.jsp").forward(request, response);
 		}else {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/404.jsp").forward(request, response);
+			
+			
+		this.getServletContext().getRequestDispatcher("/WEB-INF/404.jsp").forward(request, response);
 		}
 	}
 	/**
@@ -87,7 +92,7 @@ public class ControllerServlet extends HttpServlet {
 			String passWord = request.getParameter("password");
 			
 			Authentification authentification = new Authentification();
-		Utilisateur user ;
+		Utilisateur user ; 
 		user=authentification.EffectuConnexion(userName,passWord);
 //		String _nom =authentification.EffectuConnexion(userName,passWord).getNom();
 //		String _prenom =authentification.EffectuConnexion(userName,passWord).getPrenom();

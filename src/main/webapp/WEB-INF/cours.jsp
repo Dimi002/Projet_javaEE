@@ -49,7 +49,7 @@
 					
 			 <c:forEach var="item" items="${ epreuves }">
 			 <tr>
-                        <td width="15%"> image </td>
+                        <td width="15%"> <img src="<c:url value="eleve.jpg"/>" /> </td>
 						<td width="38%"> ${item.getNom()} </td>
 						<td width="35%"> ${item.getDate()} </td>
 						<td width="12%"> 

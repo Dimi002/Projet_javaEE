@@ -17,8 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import com.Document.bdd.Classe; 
-import com.Document.bdd.ClasseEtId;
+import com.Document.bdd.ClasseEtId; 
 import com.Document.bdd.Cours;
+import com.Document.bdd.Epreuve;
 import com.Document.bdd.MatiereEtid;
 
 
@@ -26,7 +27,7 @@ import com.Document.bdd.MatiereEtid;
  
 @WebServlet("/Controlleradmin")
 @MultipartConfig(
-		location = "/src/main/webapp/documents",  
+		location = "C:\\JAVA EE\\Projet_javaEE\\src\\main\\webapp\\documents",  
 		fileSizeThreshold=1024*1024, //1MO
 		maxFileSize= 1024*1024*10,   //10MO
 		maxRequestSize = 1024*1024*11  //11Mo
@@ -50,8 +51,12 @@ public class ControllerAdmin extends HttpServlet {
 		String action=request.getParameter("action");
 
 		if(action==null || action.equals("index")) { 
+			
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);		}else if(action.equals("inscription")){
-		}else if(action.equals("ajout")){
+		
+			}else if(action.equals("ajout")){
+				System.out.println("--------------------------------------------- Je suis passer! -----------------------------------------");
+			String message2 = "Epreuve non ajouter!";
 			
 			Cours cour = new Cours();
 			List<MatiereEtid> matieres = cour.GetListCours();
@@ -60,10 +65,9 @@ public class ControllerAdmin extends HttpServlet {
 			List<ClasseEtId> listclassesetid = new ArrayList<ClasseEtId>();  
 		    listclassesetid = classe.listIdClasse();
 		    request.setAttribute("listclassesetid",listclassesetid );
-		    
-		    
-			
+		
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/ajout.jsp").forward(request, response);
+			
 		}else if(action.equals("profil")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/profil.jsp").forward(request, response);
 		}else if(action.equals("supression")){
@@ -86,40 +90,39 @@ public class ControllerAdmin extends HttpServlet {
 			}else if(action.equals("inscription")){
 		}
 			else if(action.equals("ajout")){
-			
-			//String classes = request.getParameter("classes");
-			//String matieres = request.getParameter("matieres");
-			//Part part = request.getPart("fichier");
-			//String nomFichier = getNomFichier(part);
-			
-			// Si on a bien un fichier
-	        //if (nomFichier != null && !nomFichier.isEmpty()) {
-	         //   String nomChamp = part.getName();
-	            // Corrige un bug du fonctionnement d'Internet Explorer
-	           //  nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1)
-	                //    .substring(nomFichier.lastIndexOf('\\') + 1);
-
-	            // On écrit définitivement le fichier sur le disque
-	           // ecrireFichier(part, nomFichier, CHEMIN_FICHIERS);
-
-	           // request.setAttribute(nomChamp, nomFichier);
-	       // }
-	        
-			//request.setAttribute("classes",classes);
-			//request.setAttribute("matieres",matieres );
-			//----------------------------------------------------------------------------------------------	
-				String classes = request.getParameter("classes");
-				String matieres = request.getParameter("matieres");
-				String message = "";
 				
+				Cours cour = new Cours();
+				List<MatiereEtid> matieres = cour.GetListCours();
+				request.setAttribute("matieres",matieres );
+				Classe classe = new Classe();
+				List<ClasseEtId> listclassesetid = new ArrayList<ClasseEtId>();  
+			    listclassesetid = classe.listIdClasse();
+			    request.setAttribute("listclassesetid",listclassesetid );	
+			    
+			//----------------------------------------------------------------------------------------------	
+				String classes = request.getParameter("idclasses");
+				String matiere = request.getParameter("idmatieres");
+				String message = "";
+				String nomFichier = "";
 				try {
 				Part part = request.getPart("fichier");
 				part.write(getFileName(part));
-				message="your filr has been uploaded successfully!";
+				message="your file has been uploaded successfully!";
+			    nomFichier = getFileName(part);
 				}catch(Exception ex){
-					message = "Error Uploading file"+ex.getMessage();
+					message = "Error Uploading file"+ex.getMessage(); 
 				}
-				request.setAttribute("message",message);
+				//request.setAttribute("classes",classes);
+				//request.setAttribute("matieres",matiere);
+				//request.setAttribute("nomFichier",nomFichier);
+				
+			    
+			    Epreuve epreuve = new Epreuve();
+			    boolean res = epreuve.ajoutEpreuve(nomFichier, classes, matiere);
+			   if (res) message = "Epreuve Ajouter Avec succes !!";
+			   System.out.println("--------------------------------------------- Je suis la"+res);
+			   System.out.println("--------------------------------------------- Je suis la"+message);
+			   request.setAttribute("message",message);
 				
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/ajout.jsp").forward(request, response);
 		}else if(action.equals("profil")){
