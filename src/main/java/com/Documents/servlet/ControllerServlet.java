@@ -37,7 +37,7 @@ public class ControllerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("hello llllllllllllllllllll");
+		
 		String action=request.getParameter("action");
 		if(action==null || action.equals("index")) { 
 			System.out.println("hello wojsjhdfjhdfjh");
@@ -56,21 +56,40 @@ public class ControllerServlet extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/inscription.jsp").forward(request, response);
 		}else if(action.equals("cours")){
 			Cours cour = new Cours();
-			Epreuve epreuve = new Epreuve();
-			Classe _classe = new Classe();
+			
+			Classe _classe = new Classe(); 
 			String classe = request.getParameter("classe");
 			String idClasse = _classe.getIdClasse(classe);
 			List<MatiereEtid> matieres = cour.GetListCours();
 			request.setAttribute("matieres",matieres );
-			System.out.println("----->"+matieres);
+			System.out.println("----->"+matieres); 
 			request.setAttribute("classe",classe);
+			
+			
+			
+			//------------------------ GESTION DES EPREUVES ----------------------
+			String matiere = request.getParameter("matiere");
+			List<Cours> cours = cour.getCours(idClasse,matiere);
+			request.setAttribute("cours",cours );
+			this.getServletContext().getRequestDispatcher("/WEB-INF/cours.jsp").forward(request, response);
+		}else if(action.equals("epreuves")){
+			
+			Cours cour = new Cours();
+			Epreuve epreuve = new Epreuve();
+			Classe _classe = new Classe(); 
+			String classe = request.getParameter("classe");
+			String idClasse = _classe.getIdClasse(classe);
+			List<MatiereEtid> matieres = cour.GetListCours(); 
+			request.setAttribute("matieres",matieres );
+			System.out.println("----->"+matieres); 
+			request.setAttribute("classe",classe);
+			
+			
 			
 			//------------------------ GESTION DES EPREUVES ----------------------
 			String matiere = request.getParameter("matiere");
 			List<Epreuve> epreuves = epreuve.getEpreuve(idClasse,matiere);
 			request.setAttribute("epreuves",epreuves );
-			this.getServletContext().getRequestDispatcher("/WEB-INF/cours.jsp").forward(request, response);
-		}else if(action.equals("epreuves")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/epreuves.jsp").forward(request, response);
 		}else {
 			

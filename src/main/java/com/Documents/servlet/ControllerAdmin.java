@@ -24,7 +24,7 @@ import com.Document.bdd.MatiereEtid;
 
 
 
- 
+   
 @WebServlet("/Controlleradmin")
 @MultipartConfig(
 		location = "C:\\JAVA EE\\Projet_javaEE\\src\\main\\webapp\\documents",  
@@ -43,7 +43,7 @@ public class ControllerAdmin extends HttpServlet {
         super(); 
         // TODO Auto-generated constructor stub 
     }
-
+ 
 	
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -52,7 +52,8 @@ public class ControllerAdmin extends HttpServlet {
 
 		if(action==null || action.equals("index")) { 
 			
-			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);		}else if(action.equals("inscription")){
+			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);		
+			}else if(action.equals("inscription")){
 		
 			}else if(action.equals("ajout")){
 				System.out.println("--------------------------------------------- Je suis passer! -----------------------------------------");
@@ -78,7 +79,7 @@ public class ControllerAdmin extends HttpServlet {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/404.jsp").forward(request, response);
 		}		 
 	}
-
+ 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -117,15 +118,77 @@ public class ControllerAdmin extends HttpServlet {
 				//request.setAttribute("nomFichier",nomFichier);
 				
 			    
-			    Epreuve epreuve = new Epreuve();
-			    boolean res = epreuve.ajoutEpreuve(nomFichier, classes, matiere);
+			    
+			    boolean res = cour.ajoutCour(nomFichier, classes, matiere);
 			   if (res) message = "Epreuve Ajouter Avec succes !!";
 			   System.out.println("--------------------------------------------- Je suis la"+res);
 			   System.out.println("--------------------------------------------- Je suis la"+message);
 			   request.setAttribute("message",message);
 				
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/ajout.jsp").forward(request, response);
-		}else if(action.equals("profil")){
+		}
+		
+          else if(action.equals("ajout2")){
+        	  
+				
+				Cours cour = new Cours();
+				List<MatiereEtid> matieres = cour.GetListCours();
+				request.setAttribute("matieres",matieres );
+				Classe classe = new Classe();
+				List<ClasseEtId> listclassesetid = new ArrayList<ClasseEtId>();  
+			    listclassesetid = classe.listIdClasse();
+			    request.setAttribute("listclassesetid",listclassesetid );	
+			    
+			//----------------------------------------------------------------------------------------------	
+				String classes = request.getParameter("idclasses");
+				String matiere = request.getParameter("idmatieres");
+				String message = "";
+				String nomFichier = "";
+				try {
+				Part part = request.getPart("fichier");
+				part.write(getFileName(part));
+				message="your file has been uploaded successfully!";
+			    nomFichier = getFileName(part);
+				}catch(Exception ex){
+					message = "Error Uploading file"+ex.getMessage(); 
+				}
+				//request.setAttribute("classes",classes);
+				//request.setAttribute("matieres",matiere);
+				//request.setAttribute("nomFichier",nomFichier);
+				
+			    
+			    
+			    boolean res = cour.ajoutCour(nomFichier, classes, matiere);
+			   if (res) message = "Epreuve Ajouter Avec succes !!";
+			   System.out.println("--------------------------------------------- Je suis la"+res);
+			   System.out.println("--------------------------------------------- Je suis la"+message);
+			   request.setAttribute("message",message);
+				
+			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/ajout.jsp").forward(request, response);
+		}
+		
+		
+          else if(action.equals("ajout3")){
+        	  
+        	  Cours cour = new Cours();
+				List<MatiereEtid> matieres = cour.GetListCours();
+				request.setAttribute("matieres",matieres );
+				Classe classe = new Classe();
+				List<ClasseEtId> listclassesetid = new ArrayList<ClasseEtId>();  
+			    listclassesetid = classe.listIdClasse();
+			    request.setAttribute("listclassesetid",listclassesetid );	
+			    
+			//----------------------------------------------------------------------------------------------	
+        	  String message="Ajout non effectuer!";
+        	  String nomMatiere = request.getParameter("nom");
+			  MatiereEtid matiere = new MatiereEtid();
+			  boolean res =matiere.ajoutMatiere(nomMatiere);
+			  if (res) message = "Ajout effectuer! !!";
+			  request.setAttribute("message",message);
+			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/ajout.jsp").forward(request, response);
+		}
+			
+			else if(action.equals("profil")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/profil.jsp").forward(request, response);
 		}else if(action.equals("supression")){
 			this.getServletContext().getRequestDispatcher("/WEB-INF/admin/suppression.jsp").forward(request, response);

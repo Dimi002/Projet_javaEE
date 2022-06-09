@@ -33,31 +33,24 @@ public class Authentification {
     	int taille=0;
     	
          try {
-        	 System.out.println("j'ai effectuer la requette new");
-        	 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaee","root","");
-        	 System.out.println("CONNECTE"); 
-        	 statement = connection.createStatement();
-        	 System.out.println("state");
+        	
+        	 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaee","root","");       	
+        	 statement = connection.createStatement();      	 
             PreparedStatement pstmt = connection.prepareStatement("SELECT nom,prenom FROM utilisateur WHERE email=? AND mot_de_passe=? ;");
             pstmt.setString(1, mail);
             pstmt.setString(2, mdp);
              resultat = pstmt.executeQuery();
-             System.out.println("requete");
-             System.out.println("hello"+mail);
+            
                taille=resultat.getRow();
              
              while (resultat.next()) {
-            	 System.out.println("h‡‡‡");
+            	 
                  String nom = resultat.getString("nom");
-                 System.out.println("hii"+nom);
                  String prenom = resultat.getString("prenom");
-                 System.out.println("hii"+prenom);
                  this.etat=true;
-
                  utilisateur.setNom(nom);
                  utilisateur.setPrenom(prenom);
-                 
-                 
+             
              }
          } catch (SQLException e) {
          } finally {

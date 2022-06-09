@@ -53,25 +53,19 @@
 
             <div class="profil_cour">
                 <center><h2>AJOUTER UN COUR</h2></center>
-                <form action="" method="post" enctype="multipart/form-data">
-                        Nom: <input type="file"  name="nom" >
-                        Classe: <select name="cours" id="">
-                        <?php
-                            while($item=$classes->fetch()){
-                        ?>
-                                    <option value="<?php echo  $item['id']; ?>"><?php echo  $item['nom']; ?></option>
-                        <?php
-                            }
-                        ?>  
-                                </select>
-                        Matiere: <select name="matiere" id="">
-                        <?php
-                            while($item=$matieres->fetch()){
-                        ?>
-                                    <option value="<?php echo  $item['id']; ?>"><?php echo  $item['nom']; ?></option>
-                        <?php
-                            }
-                        ?>
+                <form action="?action=ajout2" method="post" enctype="multipart/form-data">
+                        Nom: <input type="file"  name="fichier" >
+                        Classe: <select name="idclasses" id="">
+                                    
+             <c:forEach var="item" items="${ listclassesetid }">
+			 		<option value="${item.getId()}"> <c:out value="${ item.getClasse() }" /> </option>
+             </c:forEach>
+                        
+               </select>
+                        Matiere: <select name="idmatieres">
+             <c:forEach var="item" items="${ matieres }">
+			         <option value="${item.getId()}"> <c:out value="${ item.getMatieres() }" /> </option>
+             </c:forEach>
                                 </select>
                         <input type="submit" value="ajouter">
                     </form>
@@ -84,7 +78,7 @@
             
             <div class="profil_matiere">
             <center><h2>AJOUTER UNE MATIERE</h2></center>
-                <form action="" method="post">
+                <form action="?action=ajout3" method="post">
 
                      Nom : <input type="text" name="nom" id="p_nom" placeholder="nom de la matiere" required> 
                       <input type="submit" value="ajouter" id="btn">

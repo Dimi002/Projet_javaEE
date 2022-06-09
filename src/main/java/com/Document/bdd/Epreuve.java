@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat;
 	private String date;
 	private String lien;
 	private List<Epreuve> listEpreuve = new ArrayList<Epreuve>();
+	
+	
 	 public List<Epreuve> getEpreuve(String classe, String matiere) {
 	    	
 	    	try {

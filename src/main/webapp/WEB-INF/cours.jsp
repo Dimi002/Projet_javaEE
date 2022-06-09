@@ -36,7 +36,7 @@
 				
 			</article>
 		
-		</section> 
+	     </section> 
 		
 		
 		<section class="section_droite_cours">
@@ -47,14 +47,14 @@
 			<article class="section_liste_cours">
 				<table>
 					
-			 <c:forEach var="item" items="${ epreuves }">
+			 <c:forEach var="item" items="${ cours }">
 			 <tr>
                         <td width="15%"> <img src="<c:url value="eleve.jpg"/>" /> </td>
 						<td width="38%"> ${item.getNom()} </td>
 						<td width="35%"> ${item.getDate()} </td>
 						<td width="12%"> 
 						<c:if test="${!empty sessionScope.nom }">
-						<a href="" download="${item.getLien()}" class="telechager"><div>telecharger</div></a> 
+						<a href="" download="C:/JAVA EE/Projet_javaEE/src/main/webapp/documents/${item.getLien()}" class="telechager"><div>telecharger</div></a> 
 						</c:if>
 						 <c:if test="${empty sessionScope.nom }">
                         <a href="?action=index" class="I_btn">telecharger</a>
