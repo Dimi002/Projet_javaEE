@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.Documents.beans.Utilisateur;
+
 public class Classe {
 	private String id;
 	private String nom;

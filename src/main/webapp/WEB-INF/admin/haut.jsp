@@ -1,5 +1,6 @@
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <nav>
-	        <h1>bienvenue Monsieur L'administrateur</h1>
+	        <h1>bienvenue Monsieur L'administrateur ${sessionScope.nom }</h1>
 	
 	        <a href="" class="dec">Deconnexion</a>
 	</nav>

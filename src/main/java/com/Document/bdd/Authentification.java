@@ -1,5 +1,6 @@
 package com.Document.bdd;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,6 +9,8 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.Documents.beans.Utilisateur;
 
 public class Authentification {
 	private String email;
@@ -33,10 +36,12 @@ public class Authentification {
     	int taille=0;
     	
          try {
-        	
-        	 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaee","root","");       	
-        	 statement = connection.createStatement();      	 
-            PreparedStatement pstmt = connection.prepareStatement("SELECT nom,prenom FROM utilisateur WHERE email=? AND mot_de_passe=? ;");
+        	 System.out.println("j'ai effectuer la requette new");
+        	 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/javaee","root","");
+        	 System.out.println("CONNECTE"); 
+        	 statement = connection.createStatement();
+        	 System.out.println("state");
+            PreparedStatement pstmt = connection.prepareStatement("SELECT nom,prenom,statut FROM utilisateur WHERE email=? AND mot_de_passe=? ;");
             pstmt.setString(1, mail);
             pstmt.setString(2, mdp);
              resultat = pstmt.executeQuery();
@@ -47,10 +52,14 @@ public class Authentification {
             	 
                  String nom = resultat.getString("nom");
                  String prenom = resultat.getString("prenom");
+                 String statut= resultat.getString("statut");
+                 System.out.println("hii"+prenom);
                  this.etat=true;
                  utilisateur.setNom(nom);
                  utilisateur.setPrenom(prenom);
-             
+                 utilisateur.setStatut(statut);
+                 
+                 
              }
          } catch (SQLException e) {
          } finally {

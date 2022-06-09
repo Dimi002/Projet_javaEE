@@ -20,8 +20,70 @@ header>h1{
     font-size: 36px;
     padding-top: 10px;
 }
+.form-control input {
+	border: 2px solid #f0f0f0;
+	border-radius: 4px;
+	display: block;
+	font-family: inherit;
+	font-size: 14px;
+	padding: 10px;
+	width: 100%;
+}
+
+.form-control input:focus {
+	outline: 0;
+	border-color: black;
+}
 
 
+.form input[type="submit"] {
+	background-color: #8e44ad;
+	border: 2px groove #8e44ad;
+	border-radius: 15px;
+	color: #fff;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 16px;
+	padding: 10px;
+	margin-top: 10px;
+	width: 50%;
+}
+.form input[type="reset"]
+{
+	background-color: #2ecc71;
+	border: 2px groove #2ecc71;
+	border-radius: 15px;
+	color: white;
+	width: 40%;
+	font-size: 16px;
+	padding: 10px;
+	margin-top: 20px;
+	margin-left: 25px;
+}
+.form input[type="submit"],.form input[type="reset"]
+{
+	display: inline-block;
+	margin-top: 0;
+}
+.form:hover
+{
+	background-color: rgba(100, 0, 0, 0.2);
+}
+.form input[type="submit"]:hover,.form input[type="reset"]:hover{
+	background-color: black;
+}
+.container {
+	border: 2px groove #2ecc71;
+	background-color: white;
+	border-radius: 15px;
+	/*
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	*/
+	overflow: hidden;
+	width: 400px;
+	max-width:90%;
+	margin:auto;
+	
+}
 
 nav{
     height: 72px;

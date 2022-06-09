@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+import com.Documents.beans.Utilisateur;
 
-
- public class Epreuve {
+public class Epreuve {
 	
 	private String nom;
 	private String date;
