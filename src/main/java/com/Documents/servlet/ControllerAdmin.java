@@ -117,9 +117,9 @@ public class ControllerAdmin extends HttpServlet {
 				//request.setAttribute("matieres",matiere);
 				//request.setAttribute("nomFichier",nomFichier);
 				
+				Epreuve epreuve = new Epreuve();
 			    
-			    
-			    boolean res = cour.ajoutCour(nomFichier, classes, matiere);
+			    boolean res = epreuve.ajoutEpreuve(nomFichier, classes, matiere);
 			   if (res) message = "Epreuve Ajouter Avec succes !!";
 			   System.out.println("--------------------------------------------- Je suis la"+res);
 			   System.out.println("--------------------------------------------- Je suis la"+message);

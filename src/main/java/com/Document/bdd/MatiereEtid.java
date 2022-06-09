@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.Documents.beans.Utilisateur;
+
 public class MatiereEtid{
 	  
 	private String matieres;

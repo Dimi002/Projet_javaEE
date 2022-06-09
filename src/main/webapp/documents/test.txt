@@ -1,0 +1,179 @@
+using AcMngt.Interfaces;
+using AcMngt.Service;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Web;
+using System.Net;
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
+using MailKit.Security;
+
+namespace CIAAS.WebApp.Pages
+{
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    [BindProperties()]
+    public class GestionMembreModel : PageModel
+    {
+        private readonly ILogger<GestionMembreModel> _logger;
+        private readonly OrganizationsService _organizationsService;
+        private readonly TeamsService _teamsService;
+        private readonly InvitesService _invitesService;
+        private readonly ProjectsService _projectsService;
+        [BindProperty(SupportsGet = true, Name = "OrganizationName")]
+        public String OrganizationName { get; set; }
+        public bool ShouldCreateOrg { get; private set; }
+        private ICurrentUserEmail _currentUserEmail;
+        public GestionMembreModel(ILogger<GestionMembreModel> logger, OrganizationsService organiationsService, ProjectsService projectsService, TeamsService teamsService, InvitesService invitesService, ICurrentUserEmail currentUserEmail)
+        {
+            _logger = logger;
+            _organizationsService = organiationsService;
+            _projectsService = projectsService;
+            _teamsService = teamsService;
+            _invitesService = invitesService;
+            _currentUserEmail = currentUserEmail;
+        }
+        public List<ProjectWithId> selectedProjects { get; set; } = new List<ProjectWithId>();
+        public List<SelectListItem> SelectProjects = new List<SelectListItem>();
+        public List<ProjectWithId> projectList = new List<ProjectWithId>();
+        public bool listProjectSelectionner { get; set; } = false;
+        public string EmailMembre { get; set; }
+        public List<ProjectWithId> projectSelectionner = new List<ProjectWithId>();
+        public List<List<String>> ListesMembre { get; set; } = new List<List<string>>();
+        public List<TeamWithId> listeTeams = new List<TeamWithId>();
+        public List<MembreAndProject> membreAndProject { get; set; } = new List<MembreAndProject>();
+        public List<InviteAndProject> invitesAndProject { get; set; } = new List<InviteAndProject>();
+        public async Task<IActionResult> OnGetAsync()
+        {
+            projectList = await _projectsService.ListByOrganizationName(OrganizationName);
+            this.ConstruitInviteAndProject();
+             this.ConstruitMembreAndProject();
+            var all = await _organizationsService.OrganizationList();
+            bool shouldCreateAnOrg = all.Count == 0;
+            if (shouldCreateAnOrg)
+            {
+                this.ShouldCreateOrg = true;
+                return RedirectToPage("/CreateOrganization", new { FirstOrganization = true });
+            }
+            if (all.Count != 0 && OrganizationName == null)
+            {
+                OrganizationName = all[0].OrganizationName;
+            }
+            return this.Page();
+        }
+        public async Task<IActionResult> OnPostAsync(string[] ChoiceProject)
+        {
+            projectList = await _projectsService.ListByOrganizationName(OrganizationName);
+            foreach (ProjectWithId item in projectList)
+            {
+                foreach (string item1 in ChoiceProject)
+                {
+                    if (item.ProjectGuid.ToString().Equals(item1)) projectSelectionner.Add(item);
+                }
+            }
+            Guid OrganisationGuid = (await _organizationsService.OrganizationGetByName(OrganizationName)).OrganizationGuid;
+            List<Guid> idproject = new List<Guid>();
+            foreach (string item2 in ChoiceProject)
+            {
+                idproject.Add(Guid.Parse(item2));
+            }
+            Invite invite = new Invite()
+            {
+                UserInviting = _currentUserEmail.GetCurrentUserEmail(),
+                UserInvited = EmailMembre,
+                ProjectIdAssign = idproject,
+            };
+            if (await _organizationsService.SendEmail(EmailMembre, OrganizationName)) await _invitesService.CreateInvite(invite, OrganisationGuid);
+             this.ConstruitInviteAndProject();
+             this.ConstruitMembreAndProject();
+            return  Page();
+        }
+        public void MiseAjour(List<MembreAndProject>  membreAndProjects  , string mail, ProjectWithId projectWithId)
+        {
+            foreach (MembreAndProject item in membreAndProjects)
+            {
+                if (item.email.Equals(mail)) { item.AddProject(projectWithId); }
+            }
+        }
+        public void MiseAjour(List<InviteAndProject> InviteAndProjects, string mail, ProjectWithId projectWithId)
+        {
+            foreach (InviteAndProject item in InviteAndProjects)
+            {
+                if (item.email.Equals(mail)) { item.AddProject(projectWithId); }
+            }
+        }
+        public async void ConstruitMembreAndProject()
+        {
+            projectList = await _projectsService.ListByOrganizationName(OrganizationName);
+            Guid OrganisationGuid = (await _organizationsService.OrganizationGetByName(OrganizationName)).OrganizationGuid;
+            List<string> mail = new List<string>();
+            foreach (ProjectWithId item in projectList) 
+            {
+                listeTeams = await _teamsService.List(OrganisationGuid, item.ProjectGuid);
+                foreach (TeamWithId item1 in listeTeams)
+                {
+                    foreach (string item2 in item1.Team.TeamMembers)
+                    {
+                        if (!mail.Contains(item2))
+                        {
+                            membreAndProject.Add(new MembreAndProject(item2, item));
+                            mail.Add(item2);
+                        }
+                        else
+                        {
+                            MiseAjour(membreAndProject, item2, item);
+                        }
+                    }
+                }
+            }
+        }
+        public async void ConstruitInviteAndProject()
+        {
+            Guid OrganisationGuid = (await _organizationsService.OrganizationGetByName(OrganizationName)).OrganizationGuid;
+            List<InviteWithId> inviteWithId = new List<InviteWithId>();
+            inviteWithId = await _invitesService.ListInvites(OrganisationGuid);
+            List<string> mail1 = new List<string>();
+            inviteWithId = await _invitesService.ListInvites(OrganisationGuid);
+            foreach (InviteWithId item in inviteWithId)
+            {
+                foreach (Guid item1 in item.Invite.ProjectIdAssign)
+                {
+                    if (!mail1.Contains(item.Invite.UserInvited))
+                    {
+                        invitesAndProject.Add(new InviteAndProject(item.Invite.UserInvited, await _projectsService.GetProject(OrganisationGuid, item1)));
+                        mail1.Add(item.Invite.UserInvited);
+                    }
+                    else
+                    {
+                        MiseAjour(invitesAndProject, item.Invite.UserInvited, await _projectsService.GetProject(OrganisationGuid, item1));
+                    }
+                }
+            }
+        }
+    }
+    public class MembreAndProject
+    {
+        public string email { get; set; }
+        public List<ProjectWithId> projectWithId { get; set; } = new List<ProjectWithId>();
+        public MembreAndProject(string _email, ProjectWithId _projectWithId)
+        {
+            email = _email;
+            projectWithId.Add(_projectWithId);
+        }
+        public void AddProject(ProjectWithId projectWithId)
+        {
+            this.projectWithId.Add(projectWithId);
+        }
+    }
+    public class InviteAndProject : MembreAndProject
+    {
+        public InviteAndProject(string _email, ProjectWithId _projectWithId) : base(_email, _projectWithId) { }
+    }
+}

@@ -114,13 +114,11 @@ public class ControllerServlet extends HttpServlet {
 			String passWord = request.getParameter("password");
 			
 			Authentification authentification = new Authentification();
-<<<<<<< HEAD
+
 		Utilisateur user ; 
 		user=authentification.EffectuConnexion(userName,passWord);
-=======
-		Utilisateur user ;
-		  user=authentification.EffectuConnexion(userName,passWord);
->>>>>>> 0424d0e43da27bf6bba92c70a814a4ce5fa75dae
+
+		
 //		String _nom =authentification.EffectuConnexion(userName,passWord).getNom();
 //		String _prenom =authentification.EffectuConnexion(userName,passWord).getPrenom();
 		if(user!=null ) {
